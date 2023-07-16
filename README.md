@@ -153,10 +153,14 @@ Password: ********
 sudo apt-get install git
 ```
 ```
-git clone https://github.com/neko-js/rpi-cloud
+git clone https://github.com/neko-js/rpicloud
 ```
 
+## Edit Configuration for Inadyn
 
+
+
+## Edit Configuration for OpenVPN
 
 
 
