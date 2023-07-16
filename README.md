@@ -127,6 +127,9 @@ Verify installation. It should show the version and build number.
 ```
 docker -v
 ```
+```
+docker run hello-world
+```
 
 ## Create a Dynamic DNS Account
 
