@@ -162,7 +162,14 @@ git clone https://github.com/neko-js/rpicloud
 
 ## Edit Configuration for OpenVPN
 
+## Run Inadyn, OpenVPN and PiHole
 
+```
+cd ~/rpicloud
+```
+```
+docker compose up -d
+```
 
 
 
