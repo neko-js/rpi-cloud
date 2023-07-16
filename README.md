@@ -140,3 +140,22 @@ Password: ********
 ```
 
 <img src="https://user-images.githubusercontent.com/40058557/253817906-5c34dfcb-8e81-4dbe-9413-9508838397a3.png" width="200">
+
+## Clone this Repo
+
+```
+sudo apt-get install git
+```
+```
+git clone https://github.com/neko-js/rpi-cloud
+```
+
+
+
+
+
+
+
+
+
+
