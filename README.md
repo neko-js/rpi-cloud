@@ -120,6 +120,9 @@ sudo usermod -aG docker $USER
 ```
 newgrp docker
 ```
+```
+sudo chmod 666 /var/run/docker.sock
+```
 Verify installation. It should show the version and build number.
 ```
 docker -v
