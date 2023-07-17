@@ -8,7 +8,7 @@ fi
 
 # Set up screen
 apt-get install -y screen
-echo "caption always "%{= kw}%-w%{= kG}%{+b}[%n %t]%{-b}%{= kw}%+w %= [%l] %0c:%s %{-}"
+echo "caption always \"%{= kw}%-w%{= kG}%{+b}[%n %t]%{-b}%{= kw}%+w %= [%l] %0c:%s %{-}\"
 startup_message off" >> .screenrc
 
 # Setting up Samba home folder
@@ -31,7 +31,8 @@ smbpasswd -a pi
 echo "Samba configuration finished."
 
 # Install Docker
-snap install core docker
+snap install core
+snap install docker
 sudo groupadd docker
 sudo usermod -aG docker $USER
 newgrp docker
