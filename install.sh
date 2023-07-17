@@ -6,6 +6,11 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+# Set up screen
+apt-get install -y screen
+echo "caption always "%{= kw}%-w%{= kG}%{+b}[%n %t]%{-b}%{= kw}%+w %= [%l] %0c:%s %{-}"
+startup_message off" >> .screenrc
+
 # Setting up Samba home folder
 apt-get install -y samba
 
