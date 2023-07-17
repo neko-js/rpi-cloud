@@ -1,0 +1,77 @@
+version: '3'
+
+services:
+  inadyn:
+    container_name: inadyn
+    image: troglobit/inadyn:latest
+    restart: unless-stopped
+    volumes:
+     - ./inadyn/inadyn.conf:/etc/inadyn.conf
+     
+  inadyn6:
+    container_name: inadyn6
+    image: troglobit/inadyn:latest
+    restart: unless-stopped
+    volumes:
+     - ./inadyn/inadyn6.conf:/etc/inadyn.conf
+  
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    # For DHCP it is recommended to remove these ports and instead add: network_mode: "host"
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
+      - "80:80/tcp"
+    environment:
+      TZ: 'Europe/Berlin' # Set your timezone
+      WEBPASSWORD: '' # Set your password
+    # Volumes store your data between container upgrades
+    volumes:
+      - './pihole:/etc/pihole'
+      - './pihole-data/dnsmasq.d:/etc/dnsmasq.d'
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    cap_add:
+      - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
+    restart: unless-stopped
+  
+  openvpn:
+    container_name: openvpn
+    build: ./docker-openvpn
+    cap_add:
+     - NET_ADMIN
+    ports:
+     - "1194:1194/udp"
+    restart: unless-stopped
+    volumes:
+     - ./openvpn-data/conf:/etc/openvpn
+     
+  wireguard:
+    container_name: wireguard
+    image: linuxserver/wireguard
+    cap_add:
+     - NET_ADMIN
+     - SYS_MODULE
+    ports:
+     - "51820:51820/udp"
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: 'Europe/Berlin'
+      SERVERURL: '<hostname>.dedyn.io' # Set your host.dedyn.io
+      #SERVERPORT: 51820 #optional
+      PEERS: 'pc,phone1,phone2,laptop' #optional
+      #PEERDNS: 'auto' #optional
+      #INTERNAL_SUBNET= '10.13.13.0' #optional
+      #ALLOWEDIPS: '0.0.0.0/0' #optional
+      #PERSISTENTKEEPALIVE_PEERS: '' #optional
+      #LOG_CONFS: true
+    volumes:
+     - 'wireguard/config:/config'
+     #- '/lib/modules:/lib/modules' #optional
+    sysctls:
+     - 'net.ipv4.conf.all.src_valid_mark=1'
+     - 'net.ipv6.conf.all.src_valid_mark=1'
+    restart: unless-stopped
+     
